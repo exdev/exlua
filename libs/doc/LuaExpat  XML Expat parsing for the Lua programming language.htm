@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0056)http://www.keplerproject.org/luaexpat/manual.html#parser -->
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<TITLE>LuaExpat: XML Expat parsing for the Lua programming language</TITLE>
+    <LINK rel="stylesheet" href="./LuaExpat  XML Expat parsing for the Lua programming language_files/doc.css" type="text/css">
+	
+</HEAD><BODY>
+
+<DIV id="container">
+	
+<DIV id="product">
+	<DIV id="product_logo"><A href="http://www.keplerproject.org/">
+        <IMG alt="LuaExpat logo" src="./LuaExpat  XML Expat parsing for the Lua programming language_files/luaexpat.png">
+	</A></DIV>
+	<DIV id="product_name"><BIG><STRONG>LuaExpat</STRONG></BIG></DIV>
+	<DIV id="product_description">XML Expat parsing for the Lua programming language</DIV>
+</DIV> <!-- id="product" -->
+
+<DIV id="main">
+
+<DIV id="navigation">
+<H1>LuaExpat</H1>
+	<UL>
+		<LI><A href="http://www.keplerproject.org/luaexpat/index.html">Home</A>
+			<UL>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#overview">Overview</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#status">Status</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#download">Download</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#history">History</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#references">References</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#credits">Credits</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/index.html#contact">Contact</A></LI>
+			</UL>
+		</LI>
+		<LI><STRONG>Manual</STRONG>
+			<UL>
+				<LI><A href="http://www.keplerproject.org/luaexpat/manual.html#introduction">Introduction</A></LI>
+				<LI><A href="http://www.keplerproject.org/luaexpat/manual.html#installation">Installation</A></LI>
+				<LI><A href="./LuaExpat  XML Expat parsing for the Lua programming language_files/LuaExpat  XML Expat parsing for the Lua programming language.htm">Parser Objects</A></LI>
+			</UL>
+		</LI>
+		<LI><A href="http://www.keplerproject.org/luaexpat/examples.html">Examples</A></LI>
+		<LI><A href="http://www.keplerproject.org/luaexpat/lom.html">Lua Object Model</A></LI>
+        <LI><A href="http://luaforge.net/projects/luaexpat/">Project</A>
+            <UL>
+                <LI><A href="http://luaforge.net/tracker/?group_id=13">Bug Tracker</A></LI>
+                <LI><A href="http://luaforge.net/scm/?group_id=13">CVS</A></LI>
+            </UL>
+        </LI>
+		<LI><A href="http://www.keplerproject.org/luaexpat/license.html">License</A></LI>
+	</UL>
+</DIV> <!-- id="navigation" -->
+
+<DIV id="content">
+
+<H2><A name="introduction"></A>Introduction</H2>
+
+<P>LuaExpat is a <A href="http://www.saxproject.org/">SAX</A> XML
+parser based on the <A href="http://www.libexpat.org/">Expat</A> library.
+SAX is the <EM>Simple API for XML</EM> and allows programs to:
+</P>
+
+<UL>
+    <LI>process a XML document incrementally, thus being able to handle
+    huge documents without memory penalties;</LI>
+    
+    <LI>register handler functions which are called by the parser during
+    the processing of the document, handling the document elements or
+    text.</LI>
+</UL>
+
+<P>With an event-based API like SAX the XML document can be fed to
+the parser in chunks, and the parsing begins as soon as the parser
+receives the first document chunk. LuaExpat reports parsing events
+(such as the start and end of elements) directly to the application
+through callbacks. The parsing of huge documents can benefit from
+this piecemeal operation.</P>
+
+<P>LuaExpat is distributed as a library and a file <CODE>lom.lua</CODE> that
+implements the <A href="http://www.keplerproject.org/luaexpat/lom.html">Lua Object Model</A>.</P>
+
+
+<H2><A name="building"></A>Building</H2>
+
+<P>
+LuaExpat could be built to Lua 5.0 or to Lua 5.1.
+In both cases,
+the language library and headers files for the desired version
+must be installed properly.
+LuaExpat also depends on Expat 2.0.0 which should also be installed.
+</P>
+<P>
+LuaExpat offers a Makefile and a separate configuration file,
+<CODE>config</CODE>,
+which should be edited to suit the particularities of the target platform
+before running
+<CODE>make</CODE>.
+The file has some definitions like paths to the external libraries,
+compiler options and the like.
+One important definition is the version of Lua language,
+which is not obtained from the installed software.
+</P>
+
+
+<H2><A name="installation"></A>Installation</H2>
+
+<P>The compiled binary file should be copied to a directory in your
+<A href="http://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">C path</A>.
+Lua 5.0 users should also install
+<A href="http://www.keplerproject.org/compat">Compat-5.1</A>.</P>
+
+<P>Windows users can use the binary version of LuaExpat (<CODE>lxp.dll</CODE>, compatible with
+<A href="http://luabinaries.luaforge.net/">LuaBinaries</A>) available at
+<A href="http://luaforge.net/projects/luaexpat/files">LuaForge</A>.</P>
+
+<P>The file <CODE>lom.lua</CODE> should be copied to a directory in your
+<A href="http://www.lua.org/manual/5.1/manual.html#pdf-package.path">Lua path</A>.</P>
+
+<H2><A name="parser"></A>Parser objects</H2>
+
+<P>Usually SAX implementations base all operations on the
+concept of a parser that allows the registration of callback
+functions. LuaExpat offers the same functionality but uses a
+different registration method, based on a table of callbacks. This
+table contains references to the callback functions which are
+responsible for the handling of the document parts. The parser will
+assume no behaviour for any undeclared callbacks.</P>
+
+<H4>Constructor</H4>
+
+<DL class="reference">
+    <DT><STRONG>lxp.new(<EM>callbacks [, separator]</EM>)</STRONG></DT>
+    <DD>The parser is created by a call to the function <STRONG>lxp.new</STRONG>,
+    which returns the created parser or raises a Lua error. It
+    receives the callbacks table and optionally the parser <A href="http://www.keplerproject.org/luaexpat/manual.html#separator">
+    separator character</A> used in the namespace expanded element names.</DD>
+</DL>
+
+<H4>Methods</H4>
+
+<DL class="reference">
+    <DT><STRONG>parser:close()</STRONG></DT>
+    <DD>Closes the parser, freeing all memory used by it. A call to
+    parser:close() without a previous call to parser:parse() could
+    result in an error.</DD>
+   
+    <DT><STRONG>parser:getbase()</STRONG></DT>
+    <DD>Returns the base for resolving relative URIs.</DD>
+    
+    <DT><STRONG>parser:getcallbacks()</STRONG></DT>
+    <DD>Returns the callbacks table.</DD>
+    
+    <DT><STRONG>parser:parse(s)</STRONG></DT>
+    <DD>Parse some more of the document. The string <EM>s</EM> contains
+    part (or perhaps all) of the document. When called without
+    arguments the document is closed (but the parser still has to be
+    closed).<BR>
+    The function returns a non nil value when the parser has been
+    succesfull, and when the parser finds an error it returns five
+    results: nil, <EM>msg</EM>, <EM>line</EM>, <EM>col</EM>, and
+    <EM>pos</EM>, which are the error message, the line number,
+    column number and absolute position of the error in the XML document.</DD>
+
+    <DT><STRONG>parser:pos()</STRONG></DT>
+    <DD>Returns three results: the current parsing line, column, and
+    absolute position.</DD>
+
+    <DT><STRONG>parser:setbase(base)</STRONG></DT>
+    <DD>Sets the <EM>base</EM> to be used for resolving relative URIs in
+    system identifiers.</DD>
+
+    <DT><STRONG>parser:setencoding(encoding)</STRONG></DT>
+    <DD>Set the encoding to be used by the parser. There are four
+    built-in encodings, passed as strings: "US-ASCII",
+    "UTF-8", "UTF-16", and "ISO-8859-1".</DD>
+</DL>
+
+<H4>Callbacks</H4>
+
+<P>The Lua callbacks define the handlers of the parser events. The
+use of a table in the parser constructor has some advantages over
+the registration of callbacks, since there is no need for for the API
+to provide a way to manipulate callbacks.</P>
+
+<P>Another difference lies in the behaviour of the callbacks during
+the parsing itself. The callback table contains references to the
+functions that can be redefined at will. The only restriction is
+that only the callbacks present in the table at creation time
+will be called.</P>
+
+<P>The callbacks table indices are named after the equivalent Expat
+callbacks:<BR>
+<EM>CharacterData</EM>, <EM>Comment</EM>,
+<EM>Default</EM>, <EM>DefaultExpand</EM>, <EM>EndCDataSection</EM>,
+<EM>EndElement</EM>, <EM>EndNamespaceDecl</EM>,
+<EM>ExternalEntityRef</EM>, <EM>NotStandalone</EM>,
+<EM>NotationDecl</EM>, <EM>ProcessingInstruction</EM>,
+<EM>StartCDataSection</EM>, <EM>StartElement</EM>,
+<EM>StartNamespaceDecl</EM>, and <EM>UnparsedEntityDecl</EM>.</P>
+
+<P>These indices can be references to functions with
+specific signatures, as seen below. The parser constructor also
+checks the presence of a field called <EM>_nonstrict</EM> in the
+callbacks table. If <EM>_nonstrict</EM> is absent, only valid
+callback names are accepted as indices in the table
+(Defaultexpanded would be considered an error for example). If
+<EM>_nonstrict</EM> is defined, any other fieldnames can be
+used (even if not called at all).</P>
+
+<P>The callbacks can optionally be defined as <CODE>false</CODE>,
+acting thus as placeholders for future assignment of functions.</P>
+
+<P>Every callback function receives as the first parameter the
+calling parser itself, thus allowing the same functions to be used
+for more than one parser for example.</P>
+
+<DL class="reference">
+    <DT><STRONG>callbacks.CharacterData = function(parser, string)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> recognizes an XML CDATA <EM>string</EM>.</DD>
+
+    <DT><STRONG>callbacks.Comment = function(parser, string)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> recognizes an XML comment
+    <EM>string</EM>.</DD>
+    
+    <DT><STRONG>callbacks.Default = function(parser, string)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> has a <EM>string</EM>
+    corresponding to any characters in the document which wouldn't
+    otherwise be handled. Using this handler has the side effect of
+    turning off expansion of references to internally defined general
+    entities. Instead these references are passed to the default
+    handler.</DD>
+
+    <DT><STRONG>callbacks.DefaultExpand = function(parser, string)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> has a <EM>string</EM>
+    corresponding to any characters in the document which wouldn't
+    otherwise be handled. Using this handler doesn't affect expansion
+    of internal entity references.</DD>
+
+    <DT><STRONG>callbacks.EndCdataSection = function(parser)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects the end of a CDATA
+    section.</DD>
+
+    <DT><STRONG>callbacks.EndElement = function(parser, elementName)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects the ending of an XML
+    element with <EM>elementName</EM>.</DD>
+
+    <DT><STRONG>callbacks.EndNamespaceDecl = function(parser, namespaceName)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects the ending of an XML
+    namespace with <EM>namespaceName</EM>. The handling of the end
+    namespace is done after the handling of the end tag for the element
+    the namespace is associated with.</DD>
+
+    <DT><STRONG>callbacks.ExternalEntityRef = function(parser, subparser, base, systemId, publicId)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects an external entity
+    reference.<BR><BR>
+    The <EM>subparser</EM> is a LuaExpat parser created with the
+    same callbacks and Expat context as the <EM>parser</EM> and should
+    be used to parse the external entity.<BR>
+    The <EM>base</EM> parameter is the base to use for relative
+    system identifiers. It is set by parser:setbase and may be nil.<BR>
+    The <EM>systemId</EM> parameter is the system identifier
+    specified in the entity declaration and is never nil.<BR>
+    The <EM>publicId</EM> parameter is the public id given in the
+    entity declaration and may be nil.</DD>
+
+    <DT><STRONG>callbacks.NotStandalone = function(parser)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects that the document is not
+    "standalone". This happens when there is an external subset or a
+    reference to a parameter entity, but the document does not have standalone set
+    to "yes" in an XML declaration.</DD>
+
+    <DT><STRONG>callbacks.NotationDecl = function(parser, notationName, base, systemId, publicId)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects XML notation
+    declarations with <EM>notationName</EM><BR>
+    The <EM>base</EM> parameter is the base to use for relative
+    system identifiers. It is set by parser:setbase and may be nil.<BR>
+    The <EM>systemId</EM> parameter is the system identifier
+    specified in the entity declaration and is never nil.<BR>
+    The <EM>publicId</EM> parameter is the public id given in the
+    entity declaration and may be nil.</DD>
+
+    <DT><STRONG>callbacks.ProcessingInstruction = function(parser, target, data)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects XML processing
+    instructions. The <EM>target</EM> is the first word in the
+    processing instruction. The <EM>data</EM> is the rest of the
+    characters in it after skipping all whitespace after the initial
+    word.</DD>
+
+    <DT><STRONG>callbacks.StartCdataSection = function(parser)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects the begining of an XML
+    CDATA section.</DD>
+    
+    <DT><STRONG>callbacks.StartElement = function(parser, elementName, attributes)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects the begining of an XML
+    element with <EM>elementName</EM>.<BR>
+    The <EM>attributes</EM> parameter is a Lua table with all the
+    element attribute names and values. The table contains an entry for
+    every attribute in the element start tag and entries for the
+    default attributes for that element.<BR>
+    The attributes are listed by name (including the inherited ones)
+    and by position (inherited attributes are not considered in the
+    position list).<BR>
+    As an example if the <EM>book</EM> element has attributes
+    <EM>author</EM>, <EM>title</EM> and an optional <EM>format</EM>
+    attribute (with "printed" as default value),
+<PRE class="example">&lt;book author="Ierusalimschy, Roberto" title="Programming in Lua"&gt;
+</PRE>
+    would be represented as<BR> 
+<PRE class="example">{[1] = "author",
+ [2] = "title",
+ author = "Ierusalimschy, Roberto",
+ format = "printed",
+ title = "Programming in Lua"}
+</PRE></DD>
+
+    <DT><STRONG>callbacks.StartNamespaceDecl = function(parser, namespaceName)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> detects an XML namespace
+    declaration with <EM>namespaceName</EM>. Namespace declarations
+    occur inside start tags, but the StartNamespaceDecl handler is
+    called before the StartElement handler for each namespace declared
+    in that start tag.</DD>
+
+    <DT><STRONG>callbacks.UnparsedEntityDecl = function(parser, entityName, base, systemId, publicId, notationName)</STRONG></DT>
+    <DD>Called when the <EM>parser</EM> receives declarations of
+    unparsed entities. These are entity declarations that have a
+    notation (NDATA) field.<BR>
+    As an example, in the chunk
+<PRE class="example">&lt;!ENTITY logo SYSTEM "images/logo.gif" NDATA gif&gt;
+</PRE>
+    <EM>entityName</EM> would be "logo", <EM>systemId</EM> would be
+    "images/logo.gif" and <EM>notationName</EM> would be "gif".
+    For this example the <EM>publicId</EM> parameter would be nil.
+    The <EM>base</EM> parameter would be whatever has been set with
+    <CODE>parser:setbase</CODE>. If not set, it would be nil.</DD>
+</DL>
+
+<H4><A name="separator"></A>The separator character</H4>
+
+<P>The optional separator character in the parser constructor
+defines the character used in the namespace expanded element names.
+The separator character is optional (if not defined the parser will
+not handle namespaces) but if defined it must be different from
+the character '\0'.</P>
+
+</DIV> <!-- id="content" -->
+
+</DIV> <!-- id="main" -->
+
+<DIV id="about">
+	<P><A href="http://validator.w3.org/check?uri=referer">
+    <IMG src="./LuaExpat  XML Expat parsing for the Lua programming language_files/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88"></A></P>
+	<P><SMALL>$Id: manual.html,v 1.28 2009/04/20 22:45:13 carregal Exp $</SMALL></P>
+</DIV> <!-- id="about" -->
+
+</DIV> <!-- id="container" -->
+
+
+ 
+</BODY></HTML>
