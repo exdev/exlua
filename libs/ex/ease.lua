@@ -22,6 +22,12 @@ module("ex.ease")
 --/////////////////////////////////////////////////////////////////////////////
 
 -- ------------------------------------------------------------------ 
+-- linear
+-- ------------------------------------------------------------------ 
+
+function linear (_t) return _t end
+
+-- ------------------------------------------------------------------ 
 -- quad
 --  Easing equation function for a quadratic (_t^2)
 --  @param _t: Current time (in frames or seconds).
@@ -122,7 +128,7 @@ end
 
 function sine_in (_t) return (_t == 1) and 1 or -cos(_t * half_pi) + 1 end
 function sine_out (_t) return sin(_t * half_pi) end
-function sine_inout (_t) return (cos(half_pi*_t)-1)/-2 end
+function sine_inout (_t) return (cos(pi*_t)-1)/-2 end
 function sine_outin (_t) 
     if (_t < 0.5) then return sine_out (2*_t)/2 end
     return sine_in(2*_t - 1)/2 + 0.5
@@ -141,7 +147,7 @@ function expo_inout (_t)
     if (_t==0) then return 0 end
     if (_t==1) then return 1 end
     _t = _t * 2
-    if (_t < 1) then return 2^10*(_t-1)/2 - 0.0005 end
+    if (_t < 1) then return 2^(10*(_t-1))/2 - 0.0005 end
     return 1.0005 * (2-2^(-10*(_t-1))) / 2
 end
 function expo_outin (_t)
@@ -180,6 +186,7 @@ end
 --  @param a: Amplitude.
 --  @param p: Period.
 --  @return: The correct value.
+--  recommand value: elastic (t, 0.1, 0.05)
 -- ------------------------------------------------------------------ 
 
 local function elastic_in_helper ( _t, _b, _c, _d, _a, _p )
@@ -222,7 +229,7 @@ function elastic_inout ( _t, _a, _p )
     return _a * 2^(-10*(_t-1)) * sin( (_t-1-s) * two_pi / _p ) / 2 + 1
 end
 function elastic_outin ( _t, _a, _p ) 
-    if ( _t < 0.5 ) then elastic_out_helper ( 2*_t, 0, 0.5, 1, _a, _p ) end
+    if ( _t < 0.5 ) then return elastic_out_helper ( 2*_t, 0, 0.5, 1, _a, _p ) end
     return elastic_in_helper ( 2*_t - 1, 0.5, 0.5, 1, _a, _p )
 end
 
