@@ -35,7 +35,7 @@ function make_curve ( _from, _to, _duration, _curve )
         local curTime = os.clock()
         local t = math.min( 1.0, (curTime - startTime) / _duration )
         local ratio = curve(t)
-        return ex_math.lerp( _from, _to, ratio ), (ratio == 1.0) -- current value, finished
+        return ex_math.lerp( _from, _to, ratio ), (t == 1.0) -- current value, finished
     end
 end
 
