@@ -22,10 +22,20 @@ local obj_a = nil
 -- Desc: loop method 
 -- ------------------------------------------------------------------ 
 
-function FooBar_tostring(self)
-    return self.x .. "," .. self.y .. "," .. self.z
-end
-FooBar = oo.class({x = 1, y = 2, z = 3, __tostring = FooBar_tostring})
+FooBar = oo.class({
+    x = 1, 
+    y = 2, 
+    z = 3, 
+    __tostring = function(self)
+        return self.x .. "," .. self.y .. "," .. self.z
+    end
+})
+
+-- NOTE: also valid in this way: { 
+-- function FooBar:__tostring()
+--     return self.x .. "," .. self.y .. "," .. self.z
+-- end
+-- } NOTE end 
 
 obj_a = FooBar{ x = 10 }
 print("oo method obj_a = " .. tostring(obj_a)) 
@@ -34,7 +44,14 @@ print("oo method obj_a = " .. tostring(obj_a))
 -- Desc: my method 
 -- ------------------------------------------------------------------ 
 
-FooBar = { x = 1, y = 2, z = 3, __tostring = FooBar_tostring }
+FooBar = { 
+    x = 1, 
+    y = 2, 
+    z = 3, 
+    __tostring = function(self) 
+        return self.x .. "," .. self.y .. "," .. self.z
+    end
+}
 FooBar.__index = FooBar -- important!!!
 -- FooBar = setmetatable ( FooBar, {} ) -- not necessary
 
