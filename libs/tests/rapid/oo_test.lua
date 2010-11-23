@@ -15,14 +15,14 @@ oo = require("loop.base")
 --
 --/////////////////////////////////////////////////////////////////////////////
 
-local FooBar = nil
-local obj_a = nil
+local vec3_t = nil
+local v1 = nil
 
 -- ------------------------------------------------------------------ 
 -- Desc: loop method 
 -- ------------------------------------------------------------------ 
 
-FooBar = oo.class({
+vec3_t = oo.class({
     x = 1, 
     y = 2, 
     z = 3, 
@@ -32,19 +32,19 @@ FooBar = oo.class({
 })
 
 -- NOTE: also valid in this way: { 
--- function FooBar:__tostring()
+-- function vec3_t:__tostring()
 --     return self.x .. "," .. self.y .. "," .. self.z
 -- end
 -- } NOTE end 
 
-obj_a = FooBar{ x = 10 }
-print("oo method obj_a = " .. tostring(obj_a)) 
+v1 = vec3_t{ x = 10 }
+print("oo method v1 = " .. tostring(v1)) 
 
 -- ------------------------------------------------------------------ 
 -- Desc: my method 
 -- ------------------------------------------------------------------ 
 
-FooBar = { 
+vec3_t = { 
     x = 1, 
     y = 2, 
     z = 3, 
@@ -52,10 +52,9 @@ FooBar = {
         return self.x .. "," .. self.y .. "," .. self.z
     end
 }
-FooBar.__index = FooBar -- important!!!
--- FooBar = setmetatable ( FooBar, {} ) -- not necessary
+vec3_t.__index = vec3_t -- important!!!
 
-obj_a = { x = 10 }
-obj_a = setmetatable ( obj_a, FooBar )
-print("my method obj_a = " .. tostring(obj_a)) 
+v1 = { x = 10 }
+v1 = setmetatable ( v1, vec3_t )
+print("my method v1 = " .. tostring(v1)) 
 
