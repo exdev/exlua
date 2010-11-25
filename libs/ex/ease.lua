@@ -34,9 +34,9 @@ function linear (_t) return _t end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function quad_in (_t) return _t^2 end
-function quad_out (_t) return -_t * (_t - 2) end
-function quad_inout (_t) 
+function in_quad (_t) return _t^2 end
+function out_quad (_t) return -_t * (_t - 2) end
+function inout_quad (_t) 
     _t = _t * 2
     if ( _t < 1 ) then 
         return _t^2 / 2
@@ -45,9 +45,9 @@ function quad_inout (_t)
         return -0.5 * (_t*(_t-2) - 1)
     end
 end
-function quad_outin (_t) 
-    if (_t < 0.5) then return quad_out(_t*2)/2 end
-    return quad_in(2*_t-1)/2 + 0.5
+function outin_quad (_t) 
+    if (_t < 0.5) then return out_quad(_t*2)/2 end
+    return in_quad(2*_t-1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -57,9 +57,9 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function cubic_in (_t) return _t^3 end
-function cubic_out (_t) _t = _t - 1; return _t^3 + 1 end 
-function cubic_inout (_t) 
+function in_cubic (_t) return _t^3 end
+function out_cubic (_t) _t = _t - 1; return _t^3 + 1 end 
+function inout_cubic (_t) 
     _t = _t * 2
     if (_t < 1) then
         return _t^3 / 2
@@ -68,9 +68,9 @@ function cubic_inout (_t)
         return (_t^3 + 2)/2
     end
 end 
-function cubic_outin (_t) 
-    if ( _t < 0.5 ) then return cubic_out(2*_t)/2 end
-    return cubic_in(2*_t-1)/2 + 0.5
+function outin_cubic (_t) 
+    if ( _t < 0.5 ) then return out_cubic(2*_t)/2 end
+    return in_cubic(2*_t-1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -80,9 +80,9 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function quart_in (_t) return _t^4 end
-function quart_out (_t) _t = _t - 1; return -(_t^4 - 1) end
-function quart_inout (_t) 
+function in_quart (_t) return _t^4 end
+function out_quart (_t) _t = _t - 1; return -(_t^4 - 1) end
+function inout_quart (_t) 
     _t = _t * 2
     if (_t < 1) then 
         return _t^4 * 0.5
@@ -91,9 +91,9 @@ function quart_inout (_t)
         return (_t^4 - 2)/-2
     end
 end
-function quart_outin (_t) 
-    if (_t < 0.5) then return quart_out(2*_t)/2 end
-    return quart_in(2*_t-1)/2 + 0.5
+function outin_quart (_t) 
+    if (_t < 0.5) then return out_quart(2*_t)/2 end
+    return in_quart(2*_t-1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -103,9 +103,9 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function quint_in (_t) return _t^5 end
-function quint_out (_t) _t = _t - 1; return _t^5 + 1 end
-function quint_inout (_t)
+function in_quint (_t) return _t^5 end
+function out_quint (_t) _t = _t - 1; return _t^5 + 1 end
+function inout_quint (_t)
     _t = _t * 2
     if (_t < 1) then 
         return _t^5 / 2
@@ -114,9 +114,9 @@ function quint_inout (_t)
         return (_t^5 + 2)/2
     end
 end
-function quint_outin (_t)
-    if (_t < 0.5) then return quint_out (2*_t)/2 end
-    return quint_in(2*_t - 1)/2 + 0.5
+function outin_quint (_t)
+    if (_t < 0.5) then return out_quint (2*_t)/2 end
+    return in_quint(2*_t - 1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -126,12 +126,12 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function sine_in (_t) return (_t == 1) and 1 or -cos(_t * half_pi) + 1 end
-function sine_out (_t) return sin(_t * half_pi) end
-function sine_inout (_t) return (cos(pi*_t)-1)/-2 end
-function sine_outin (_t) 
-    if (_t < 0.5) then return sine_out (2*_t)/2 end
-    return sine_in(2*_t - 1)/2 + 0.5
+function in_sine (_t) return (_t == 1) and 1 or -cos(_t * half_pi) + 1 end
+function out_sine (_t) return sin(_t * half_pi) end
+function inout_sine (_t) return (cos(pi*_t)-1)/-2 end
+function outin_sine (_t) 
+    if (_t < 0.5) then return out_sine (2*_t)/2 end
+    return in_sine(2*_t - 1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -141,18 +141,18 @@ end
 --  return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function expo_in (_t) return (_t == 0 or _t == 1) and _t or 2^(10*(_t-1)) - 0.001 end
-function expo_out (_t) return (_t == 1) and 1 or 1.001 * ( 1 - (2^(-10*_t)) ) end
-function expo_inout (_t)
+function in_expo (_t) return (_t == 0 or _t == 1) and _t or 2^(10*(_t-1)) - 0.001 end
+function out_expo (_t) return (_t == 1) and 1 or 1.001 * ( 1 - (2^(-10*_t)) ) end
+function inout_expo (_t)
     if (_t==0) then return 0 end
     if (_t==1) then return 1 end
     _t = _t * 2
     if (_t < 1) then return 2^(10*(_t-1))/2 - 0.0005 end
     return 1.0005 * (2-2^(-10*(_t-1))) / 2
 end
-function expo_outin (_t)
-    if (_t < 0.5) then return expo_out(2*_t)/2 end
-    return expo_in(2*_t-1)/2 + 0.5
+function outin_expo (_t)
+    if (_t < 0.5) then return out_expo(2*_t)/2 end
+    return in_expo(2*_t-1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -162,9 +162,9 @@ end
 --  @return:	The correct value.
 -- ------------------------------------------------------------------ 
 
-function circ_in (_t) return -(sqrt(1-_t^2) - 1) end
-function circ_out (_t) _t = _t - 1; return sqrt(1-_t^2) end
-function circ_inout (_t) 
+function in_circ (_t) return -(sqrt(1-_t^2) - 1) end
+function out_circ (_t) _t = _t - 1; return sqrt(1-_t^2) end
+function inout_circ (_t) 
     _t = _t * 2
     if ( _t < 1 ) then
         return -( sqrt(1-_t^2) - 1 )/2
@@ -172,11 +172,11 @@ function circ_inout (_t)
     _t = _t - 2
     return ( sqrt(1-_t^2) + 1 )/2
 end
-function circ_outin (_t)
+function outin_circ (_t)
     if (_t < 0.5) then 
-        return circ_out(2*_t)/2 
+        return out_circ(2*_t)/2 
     end
-    return circ_in(2*_t - 1)/2 + 0.5
+    return in_circ(2*_t - 1)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -212,9 +212,9 @@ local function elastic_out_helper ( _t, _b --[[ dummy --]], _c, _d --[[ dummy --
     return _a * 2^(-10*_t) * sin( (_t-s) * two_pi / _p ) + _c
 end
 
-function elastic_in ( _t, _a, _p ) return elastic_in_helper ( _t, 0, 1, 1, _a, _p ) end
-function elastic_out ( _t, _a, _p ) return elastic_out_helper ( _t, 0, 1, 1, _a, _p ) end
-function elastic_inout ( _t, _a, _p ) 
+function in_elastic ( _t, _a, _p ) return elastic_in_helper ( _t, 0, 1, 1, _a, _p ) end
+function out_elastic ( _t, _a, _p ) return elastic_out_helper ( _t, 0, 1, 1, _a, _p ) end
+function inout_elastic ( _t, _a, _p ) 
     if (_t==0) then return 0 end
     _t = _t * 2
     if (_t==2) then return 1 end
@@ -228,7 +228,7 @@ function elastic_inout ( _t, _a, _p )
     end
     return _a * 2^(-10*(_t-1)) * sin( (_t-1-s) * two_pi / _p ) / 2 + 1
 end
-function elastic_outin ( _t, _a, _p ) 
+function outin_elastic ( _t, _a, _p ) 
     if ( _t < 0.5 ) then return elastic_out_helper ( 2*_t, 0, 0.5, 1, _a, _p ) end
     return elastic_in_helper ( 2*_t - 1, 0.5, 0.5, 1, _a, _p )
 end
@@ -242,9 +242,9 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-function back_in ( _t, _s ) return _t * _t * ( (_s+1) * _t - _s ) end
-function back_out ( _t, _s ) _t = _t - 1; return _t * _t * ( (_s+1) * _t + _s ) + 1 end
-function back_inout ( _t, _s ) 
+function in_back ( _t, _s ) return _t * _t * ( (_s+1) * _t - _s ) end
+function out_back ( _t, _s ) _t = _t - 1; return _t * _t * ( (_s+1) * _t + _s ) + 1 end
+function inout_back ( _t, _s ) 
     _t = _t * 2
     if ( _t < 1 ) then
         _s = _s * 1.525
@@ -255,9 +255,9 @@ function back_inout ( _t, _s )
         return 0.5 * ( _t * _t * ( (_s+1) * _t + _s ) + 2 )
     end
 end
-function back_outin ( _t, _s ) 
-    if ( _t < 0.5 ) then return back_out(2*_t,_s) / 2 end
-    return back_in(2*_t - 1, _s)/2 + 0.5
+function outin_back ( _t, _s ) 
+    if ( _t < 0.5 ) then return out_back(2*_t,_s) / 2 end
+    return in_back(2*_t - 1, _s)/2 + 0.5
 end
 
 -- ------------------------------------------------------------------ 
@@ -284,13 +284,13 @@ local function bounce_out_helper ( _t, _c, _a )
     end
 end
 
-function bounce_out ( _t, _a ) return bounce_out_helper(_t, 1, _a) end
-function bounce_in ( _t, _a ) return 1 - bounce_out_helper(1-_t, 1, _a) end
-function bounce_inout ( _t, _a ) 
-    if (_t < 0.5) then return bounce_in(2*_t,_a)/2; end
-    return (_t == 1) and 1 or bounce_out(2*_t-1, _a)/2 + 0.5
+function out_bounce ( _t, _a ) return bounce_out_helper(_t, 1, _a) end
+function in_bounce ( _t, _a ) return 1 - bounce_out_helper(1-_t, 1, _a) end
+function inout_bounce ( _t, _a ) 
+    if (_t < 0.5) then return in_bounce(2*_t,_a)/2; end
+    return (_t == 1) and 1 or out_bounce(2*_t-1, _a)/2 + 0.5
 end
-function bounce_outin ( _t, _a ) 
+function outin_bounce ( _t, _a ) 
     if (_t < 0.5) then return bounce_out_helper(_t*2, 0.5, _a) end
     return 1 - bounce_out_helper(2-2*_t, 0.5, _a)
 end
@@ -330,14 +330,14 @@ local function smooth_begin_end_mix_factor (_v) return min(max(1 - _v * 2 + 0.3,
 -- Progress ~ 0.5  - 1   : Linear only
 
 -- Easing function that starts growing slowly, then increases in speed. At the end of the curve the speed will be constant.
-function curve_in (_t)
+function in_curve (_t)
     local sinProgress = sin_progress(_t)
     local mix = smooth_begin_end_mix_factor(_t)
     return sinProgress * mix + _t * (1 - mix)
 end
 
 -- Easing function that starts growing steadily, then ends slowly. The speed will be constant at the beginning of the curve.
-function curve_out (_t)
+function out_curve (_t)
     local sinProgress = sin_progress(_t)
     local mix = smooth_begin_end_mix_factor(1 - _t)
     return sinProgress * mix + _t * (1 - mix)
