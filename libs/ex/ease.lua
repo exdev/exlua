@@ -189,7 +189,7 @@ end
 --  recommand value: elastic (t, 0.1, 0.05)
 -- ------------------------------------------------------------------ 
 
-local function elastic_in_helper ( _t, _b, _c, _d, _a, _p )
+local function in_elastic_helper ( _t, _b, _c, _d, _a, _p )
     if (_t==0) then return _b end
     local t_adj = _t / _d
     if (t_adj==1) then return _b+_c end
@@ -203,7 +203,7 @@ local function elastic_in_helper ( _t, _b, _c, _d, _a, _p )
     t_adj = t_adj - 1
     return -(_a * 2^(10 * t_adj) * sin( two_pi * (t_adj*_d-s) / _p )) + _b
 end
-local function elastic_out_helper ( _t, _b --[[ dummy --]], _c, _d --[[ dummy --]], _a, _p )
+local function out_elastic_helper ( _t, _b --[[ dummy --]], _c, _d --[[ dummy --]], _a, _p )
     if (_t==0) then return 0 end
     if (_t==1) then return _c end
     local s
@@ -212,8 +212,8 @@ local function elastic_out_helper ( _t, _b --[[ dummy --]], _c, _d --[[ dummy --
     return _a * 2^(-10*_t) * sin( (_t-s) * two_pi / _p ) + _c
 end
 
-function in_elastic ( _t, _a, _p ) return elastic_in_helper ( _t, 0, 1, 1, _a, _p ) end
-function out_elastic ( _t, _a, _p ) return elastic_out_helper ( _t, 0, 1, 1, _a, _p ) end
+function in_elastic ( _t, _a, _p ) return in_elastic_helper ( _t, 0, 1, 1, _a, _p ) end
+function out_elastic ( _t, _a, _p ) return out_elastic_helper ( _t, 0, 1, 1, _a, _p ) end
 function inout_elastic ( _t, _a, _p ) 
     if (_t==0) then return 0 end
     _t = _t * 2
@@ -229,8 +229,8 @@ function inout_elastic ( _t, _a, _p )
     return _a * 2^(-10*(_t-1)) * sin( (_t-1-s) * two_pi / _p ) / 2 + 1
 end
 function outin_elastic ( _t, _a, _p ) 
-    if ( _t < 0.5 ) then return elastic_out_helper ( 2*_t, 0, 0.5, 1, _a, _p ) end
-    return elastic_in_helper ( 2*_t - 1, 0.5, 0.5, 1, _a, _p )
+    if ( _t < 0.5 ) then return out_elastic_helper ( 2*_t, 0, 0.5, 1, _a, _p ) end
+    return in_elastic_helper ( 2*_t - 1, 0.5, 0.5, 1, _a, _p )
 end
 
 
@@ -268,7 +268,7 @@ end
 --  @return: The correct value.
 -- ------------------------------------------------------------------ 
 
-local function bounce_out_helper ( _t, _c, _a )
+local function out_bounce_helper ( _t, _c, _a )
     if (_t == 1) then return _c end
     if ( _t < (4/11) ) then
         return _c * ( 7.5625 * _t * _t )
@@ -284,15 +284,15 @@ local function bounce_out_helper ( _t, _c, _a )
     end
 end
 
-function out_bounce ( _t, _a ) return bounce_out_helper(_t, 1, _a) end
-function in_bounce ( _t, _a ) return 1 - bounce_out_helper(1-_t, 1, _a) end
+function out_bounce ( _t, _a ) return out_bounce_helper(_t, 1, _a) end
+function in_bounce ( _t, _a ) return 1 - out_bounce_helper(1-_t, 1, _a) end
 function inout_bounce ( _t, _a ) 
     if (_t < 0.5) then return in_bounce(2*_t,_a)/2; end
     return (_t == 1) and 1 or out_bounce(2*_t-1, _a)/2 + 0.5
 end
 function outin_bounce ( _t, _a ) 
-    if (_t < 0.5) then return bounce_out_helper(_t*2, 0.5, _a) end
-    return 1 - bounce_out_helper(2-2*_t, 0.5, _a)
+    if (_t < 0.5) then return out_bounce_helper(_t*2, 0.5, _a) end
+    return 1 - out_bounce_helper(2-2*_t, 0.5, _a)
 end
 
 -- ------------------------------------------------------------------ 
