@@ -5,5 +5,12 @@
 -- Description  : 
 -- ======================================================================================
 
-print ("Hello World!")
+require("tests.rapid.simple_class")
+require("ex.debug")
 
+print ("--------------- start test ----------------")
+
+obj = tests.rapid.simple_class()
+obj:say()
+obj:say2()
+ex.debug.print_table( obj, "obj" )
